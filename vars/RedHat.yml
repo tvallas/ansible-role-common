@@ -1,0 +1,54 @@
+admin_group: wheel
+
+common_installed_packages:
+  - bash-completion
+  - bind-utils
+  - iotop
+  - kexec-tools
+  - lsof
+  - lsscsi
+  - mlocate
+  - nmap
+  - open-vm-tools
+  - psmisc
+  - rsync
+  - screen
+  - sg3_utils
+  - strace
+  - tcpdump
+  - traceroute
+  - vim
+  - wget
+  - yum-utils
+  - ncdu
+  - sudo
+  - firewalld
+  - libselinux-python
+  - tree
+  - the_silver_searcher
+
+common_removed_packages:
+  - NetworkManager
+  - aic94xx-firmware.noarch
+  - alsa-firmware.noarch
+  - alsa-tools-firmware.x86_64
+  - ivtv-firmware.noarch
+  - iwl100-firmware.noarch
+  - iwl1000-firmware.noarch
+  - iwl105-firmware.noarch
+  - iwl135-firmware.noarch
+  - iwl2000-firmware.noarch
+  - iwl2030-firmware.noarch
+  - iwl3160-firmware.noarch
+  - iwl3945-firmware.noarch
+  - iwl4965-firmware.noarch
+  - iwl5000-firmware.noarch
+  - iwl5150-firmware.noarch
+  - iwl6000-firmware.noarch
+  - iwl6000g2a-firmware.noarch
+  - iwl6000g2b-firmware.noarch
+  - iwl6050-firmware.noarch
+  - iwl7260-firmware.noarch
+  - postfix
+
+ntp_service: ntpd.service

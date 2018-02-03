@@ -1,0 +1,8 @@
+###################################
+# This file is managed by ansible #
+###################################
+
+search {{ dns_search_path }}
+{% for item in dns_servers %}
+nameserver  {{ item }}
+{% endfor %}

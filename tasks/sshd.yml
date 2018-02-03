@@ -1,0 +1,68 @@
+---
+# tasks file for sshd
+
+- name: Set Permissions on /etc/ssh/sshd_config
+  file:
+    path: /etc/ssh/sshd_config
+    state: file
+    mode: 0600
+    owner: root
+    group: root
+
+- name: Disable X11 Forwarding
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    state: present
+    regexp: '^X11Forwarding'
+    line: 'X11Forwarding no'
+  notify:
+    - restart ssh service
+
+- name: Set SSH MaxAuthTries to 4 or less
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    state: present
+    regexp: '^MaxAuthTries'
+    line: 'MaxAuthTries 4'
+  notify:
+    - restart ssh service
+
+- name: Configure SSH Root Login
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    state: present
+    regexp: '^PermitRootLogin'
+    line: "PermitRootLogin {{ allow_root_ssh }}"
+  notify:
+    - restart ssh service
+
+- name: Use Only Approved Cipher in Counter Mode
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    state: present
+    regexp: '^Ciphers'
+    line: 'Ciphers aes128-ctr,aes192-ctr,aes256-ctr'
+  notify:
+    - restart ssh service
+
+- name: Set Idle Timeout Interval for User Login
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    state: present
+    regexp: '^ClientAliveInterval'
+    line: 'ClientAliveInterval 1800'
+  notify:
+    - restart ssh service
+
+- name: Set Client Alive Messages Count limit
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    state: present
+    regexp: '^ClientAliveCountMax'
+    line: 'ClientAliveCountMax 0'
+  notify:
+    - restart ssh service
+
+- name: Verify sshd config
+  command: "sshd -t"
+  changed_when: false

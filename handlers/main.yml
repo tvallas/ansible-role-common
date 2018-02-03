@@ -1,0 +1,17 @@
+---
+# handlers file for common
+
+- name: restart ssh service
+  service:
+    name: sshd
+    state: restarted
+
+- name: restart ntpd service
+  service:
+    name: "{{ ntp_service }}"
+    state: restarted
+
+- name: restart network
+  service:
+    name: network
+    state: restarted

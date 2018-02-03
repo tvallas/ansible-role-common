@@ -1,0 +1,29 @@
+---
+# defaults file for common
+
+# Configure ssh root login (yes/no)
+allow_root_ssh: "no"
+
+# Timezone & NTP
+timezone: "Europe/Helsinki"
+ntp_servers:
+  - 0.centos.pool.ntp.org
+  - 1.centos.pool.ntp.org
+  - 2.centos.pool.ntp.org
+  - 3.centos.pool.ntp.org
+
+motd_info:
+- " Description:    ": "{{ host_description | default('N/A') }}"
+- " FQDN:           ": "{{ ansible_fqdn }}"
+- " Distro:         ": "{{ ansible_distribution }} {{ ansible_distribution_version }} {{ ansible_distribution_release }}"
+- " Virtual:        ": "{{ 'YES' if ansible_virtualization_role == 'guest' else 'NO' }}"
+- " CPUs:           ": "{{ ansible_processor_vcpus }}"
+- " Memory:         ": "{{ (ansible_memtotal_mb / 1000) | round(1) }} GB"
+- " Timezone:       ": "{{ timezone }}"
+
+managed_users: []
+managed_groups: []
+
+copy_dotfiles: true
+
+common_host_file_entries: []

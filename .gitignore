@@ -1,0 +1,17 @@
+*.retry
+# swap
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-v][a-z]
+[._]sw[a-p]
+# session
+Session.vim
+# temporary
+.netrwhist
+*~
+*.DS_Store
+Thumbs.db
+.bundle
+.vaultpass
+ansible.cfg
+inventories/test

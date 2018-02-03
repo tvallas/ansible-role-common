@@ -1,0 +1,39 @@
+---
+
+- name: Configure timezone
+  timezone:
+    name: "{{ timezone }}"
+
+  #The NTP daemon (ntpd) should be considered for systems which are normally kept permanently on
+- name: Check if chronyd is installed
+  stat:
+    path: /usr/lib/systemd/system/chronyd.service
+  register: chronyd_status
+
+- name: Disable & stop chronyd
+  service:
+    name: chronyd
+    enabled: false
+    state: stopped
+  when: chronyd_status.stat.exists
+
+- name: Install ntpd
+  package:
+    name: ntp
+    state: present
+
+- name: Configure NTP settings
+  template:
+    src: "ntp.conf.j2"
+    dest: "/etc/ntp.conf"
+    backup: yes
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart ntpd service
+
+- name: Enable and start ntp service
+  service:
+    name: "{{ ntp_service }}"
+    enabled: yes
+    state: started

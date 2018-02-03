@@ -1,0 +1,11 @@
+- name: Creates dotfiles for users
+  copy:
+    dest: "/home/{{ item.0.user }}/.{{ item.1.name }}"
+    content: "{{ item.1.content}}"
+    owner: "{{ item.0.user }}"
+    group: "{{ item.0.group }}"
+    mode: 0600
+    backup: yes
+  with_subelements:
+    - "{{ dotfiles }}"
+    - files

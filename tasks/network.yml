@@ -1,0 +1,7 @@
+---
+
+- name: Configure network adapter
+  template:
+    src: ifcfg-device.j2
+    dest: /etc/sysconfig/network-scripts/ifcfg-{{ adapter }}
+  notify: restart network

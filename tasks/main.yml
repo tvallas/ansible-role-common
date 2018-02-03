@@ -1,0 +1,36 @@
+---
+# tasks file for common
+
+- name: Include OS-specific variables.
+  include_vars: "{{ ansible_os_family }}.yml"
+  tags: always
+
+- import_tasks: packages.yml
+
+- import_tasks: network.yml
+  tags: network
+- import_tasks: hosts.yml
+  tags: hosts
+  when: ansible_os_family == 'RedHat'
+- import_tasks: ipv6.yml
+  tags: ipv6
+- import_tasks: sudoers.yml
+  tags: sudoers
+- import_tasks: groups.yml
+  tags: groups
+- import_tasks: users.yml
+  tags: users
+- import_tasks: dotfiles.yml
+  tags: dotfiles  
+- import_tasks: host.yml
+  tags: host
+- import_tasks: dns.yml
+  tags: dns
+- import_tasks: ntp.yml
+  tags: ntp
+- import_tasks: motd.yml
+  tags: motd
+- import_tasks: sshd.yml
+  tags: sshd
+- import_tasks: root_password.yml
+  tags: root_password

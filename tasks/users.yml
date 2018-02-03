@@ -1,0 +1,18 @@
+- name: User creation
+  user:
+    name: "{{ item.username }}"
+    comment: "{{ item.comment }}"
+    uid: "{{ item.uid }}"
+    group: "{{ item.group }}"
+    groups: "{{ item.groups | join(',')}}"
+    state: "{{ item.state }}"
+    shell: "/bin/bash"
+  with_items: "{{ managed_users }}"
+
+- name: Add public keys
+  authorized_key:
+    exclusive: yes
+    key: "{{ item.publickeys | join('\n') }}"
+    user: "{{ item.username }}"
+  with_items: "{{ managed_users }}"
+  when: item.state == "present"

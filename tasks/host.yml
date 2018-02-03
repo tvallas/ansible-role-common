@@ -1,0 +1,6 @@
+---
+
+- name: Set hostname
+  hostname:
+    name: "{{ hostname }}.{{ domain }}"
+  when: hostname is defined

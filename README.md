@@ -1,45 +1,136 @@
-**Edit a file, create a new file, and clone from Bitbucket in under 2 minutes**
+Role Name
+=========
 
-When you're done, you can delete the content in this README and update the file with details for others getting started with your repository.
+A role for managing common settings for typical server such as users, groups, sshd, sudoers, ntp, dns etc. Also manages user's dotfiles such as .bashrc or .vimrc and ssh keys.
 
-*We recommend that you open this README in another tab as you perform the tasks below. You can [watch our video](https://youtu.be/0ocf7u76WSo) for a full demo of all the steps in this tutorial. Open the video in a new tab to avoid leaving Bitbucket.*
+Requirements
+------------
 
----
+None
 
-## Edit a file
+Role Variables
+--------------
 
-You’ll start by editing this README file to learn how to edit a file in Bitbucket.
+#### `managed_users` (optional)
 
-1. Click **Source** on the left side.
-2. Click the README.md link from the list of files.
-3. Click the **Edit** button.
-4. Delete the following text: *Delete this line to make a change to the README from Bitbucket.*
-5. After making your change, click **Commit** and then **Commit** again in the dialog. The commit page will open and you’ll see the change you just made.
-6. Go back to the **Source** page.
+Add and configure users  (dict). For example:
 
----
+```
+managed_users:
+  - username: user1
+    state: present
+    comment: "John Doe"
+    group: staff
+    uid: 1234
+    groups:
+      - "{{ admin_group }}"
+    publickeys:
+      - 'ssh-rsa xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+  - username: user2
+    state: present
+    comment: "Esko Mörkö
+    group: staff
+    uid: 1235
+    groups:
+      - "{{ admin_group }}"
+    publickeys:
+      - 'ssh-rsa xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+```
 
-## Create a file
+#### `managed_groups**` (optional)
 
-Next, you’ll add a new file to this repository.
+Add and manage groups (dict). For example:
 
-1. Click the **New file** button at the top of the **Source** page.
-2. Give the file a filename of **contributors.txt**.
-3. Enter your name in the empty file space.
-4. Click **Commit** and then **Commit** again in the dialog.
-5. Go back to the **Source** page.
+```
+managed_groups:
+  - groupname: staff
+    state: present
+    system: false
+    gid: 10000
+```
 
-Before you move on, go ahead and explore the repository. You've already seen the **Source** page, but check out the **Commits**, **Branches**, and **Settings** pages.
+#### `dotfiles` (optional)
+Creates dotfiles for users. For example:
 
----
+```
+dotfiles:
+ - user: user1
+   group: staff
+   files:
+   - name: bashrc
+     content: |
+        # Ansible managed
+        # Source global definitions
+        if [ -f /etc/bashrc ]; then
+          . /etc/bashrc
+        fi
+        alias ls='ls -Fh --color=auto'
+        alias ll='ls -lahF --color=auto'
+   - name: vimrc
+     content: |
+        " Ansible managed
+        set fo=tcq
+        set nocompatible
+        set modeline
+        set bg=dark
+        syntax on
+        set hlsearch
+        set t_Co=256
+```
 
-## Clone a repository
+#### `dns_servers` (optional)
+Manages dns servers (list). For example:
 
-Use these steps to clone from SourceTree, our client for using the repository command-line free. Cloning allows you to work on your files locally. If you don't yet have SourceTree, [download and install first](https://www.sourcetreeapp.com/). If you prefer to clone from the command line, see [Clone a repository](https://confluence.atlassian.com/x/4whODQ).
+```
+dns_servers:
+ - 192.168.0.1
+ - 8.8.8.8
+ - 8.8.4.4
+```
 
-1. You’ll see the clone button under the **Source** heading. Click that button.
-2. Now click **Check out in SourceTree**. You may need to create a SourceTree account or log in.
-3. When you see the **Clone New** dialog in SourceTree, update the destination path and name if you’d like to and then click **Clone**.
-4. Open the directory you just created to see your repository’s files.
+#### `dns_search_path` (optional)
+Configures DNS search path. For example:
 
-Now that you're more familiar with your Bitbucket repository, go ahead and add a new file locally. You can [push your change back to Bitbucket with SourceTree](https://confluence.atlassian.com/x/iqyBMg), or you can [add, commit,](https://confluence.atlassian.com/x/8QhODQ) and [push from the command line](https://confluence.atlassian.com/x/NQ0zDQ).
+```
+dns_search_path: mydomain.com
+```
+
+#### `allow_root_ssh` (optional)
+Configure ssh root login (yes/no)
+
+#### `timezone` (optional)
+Timezone e.g. "Europe/Helsinki"
+
+#### `ntp_servers` (optional)
+used to configure ntp servers (list). For example:
+
+```
+ntp_servers:
+- 192.168.0.1
+- pool.ntp.org
+```
+
+
+Dependencies
+------------
+
+None
+
+Example Playbook
+----------------
+
+Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+
+    - hosts: servers
+      roles:
+         - common
+
+License
+-------
+
+Proprietary
+
+Author Information
+------------------
+
+Tuomas Vallaskangas
