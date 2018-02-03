@@ -1,4 +1,4 @@
-Role Name
+Ansible role common
 =========
 
 A role for managing common settings for typical server such as users, groups, sshd, sudoers, ntp, dns etc. Also manages user's dotfiles such as .bashrc or .vimrc and ssh keys.
