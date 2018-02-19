@@ -27,3 +27,5 @@ managed_groups: []
 copy_dotfiles: true
 
 common_host_file_entries: []
+
+common_yum_exclude_packages: []

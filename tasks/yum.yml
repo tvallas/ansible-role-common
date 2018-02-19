@@ -1,0 +1,7 @@
+
+- name: Exclude packages for yum updates
+  blockinfile:
+    path: /etc/yum.conf
+    block: "exclude={{ common_yum_exclude_packages }}"
+    insertafter: "logfile=/var/log/yum.log"
+  when: ansible_os_family == 'RedHat'

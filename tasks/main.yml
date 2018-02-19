@@ -21,7 +21,7 @@
 - import_tasks: users.yml
   tags: users
 - import_tasks: dotfiles.yml
-  tags: dotfiles  
+  tags: dotfiles
 - import_tasks: host.yml
   tags: host
 - import_tasks: dns.yml
@@ -34,3 +34,6 @@
   tags: sshd
 - import_tasks: root_password.yml
   tags: root_password
+- import_tasks: yum.yml
+  tags: yum
+  when: ansible_os_family == 'RedHat'
