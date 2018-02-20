@@ -1,0 +1,7 @@
+- name: Create sudoers file {{ sudoers_file.name }}
+  copy:
+    content: "{{ sudoers_file.content }}"
+    dest: "/etc/sudoers.d/{{ sudoers_file.name }}"
+    owner: root
+    group: root
+    mode: 0660

@@ -13,6 +13,13 @@
     line: "%{{ admin_group }} ALL=(ALL) NOPASSWD: ALL"
   register: sudoers_wheel_conf
 
+- name: Create custom sudoers files loop
+  include_tasks: "sudoers_loop.yml"
+  with_list: "{{ common_sudoers_files }}"
+  loop_control:
+    loop_var: sudoers_file
+
+
 - name: Final sudoers file check
   shell: visudo -q -c -f /etc/sudoers.tmp && cp -f /etc/sudoers.tmp /etc/sudoers
   when: sudoers_wheel_conf.changed == true

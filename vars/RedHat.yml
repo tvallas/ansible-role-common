@@ -26,6 +26,7 @@ common_installed_packages:
   - libselinux-python
   - tree
   - the_silver_searcher
+  - yum-plugin-changelog
 
 common_removed_packages:
   - NetworkManager

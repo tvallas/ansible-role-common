@@ -110,6 +110,17 @@ ntp_servers:
 - pool.ntp.org
 ```
 
+#### `common_sudoers_files`(optional)
+Allows adding custom sudoers files under /etc/sudoers.d directory. For example:
+
+```
+common_sudoers_files:
+  - name: 10_zabbix
+    content: |
+      zabbix ALL=(ALL) NOPASSWD: /bin/find
+```
+
+
 
 Dependencies
 ------------
