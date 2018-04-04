@@ -27,6 +27,7 @@ common_installed_packages:
   - tree
   - the_silver_searcher
   - yum-plugin-changelog
+  - reptyr
 
 common_removed_packages:
   - NetworkManager
